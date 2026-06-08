@@ -21,4 +21,5 @@ STATS_PATH = os.path.join(os.path.dirname(__file__), "stats.pkl")
 CORS_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://world-cup2026.alwaysdata.net"
 ] + [o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()]
