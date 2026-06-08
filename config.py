@@ -1,8 +1,9 @@
 """Configuration partagée du service de prédiction ML."""
 import os
-
+#VITE_ZAFRONIX_API_KEY=zwc_free_76e29d8b3d1531a27d30fe8d #niassssn@gmail.com
+#VITE_ZAFRONIX_API_KEY=zwc_free_1822862af5be4f2d8537feec #khadimniassssn@gmail.com
 # Clé API Zafronix WC (free tier). Surchargée par la variable d'env WC_API_KEY.
-WC_API_KEY = os.getenv("WC_API_KEY", "zwc_free_76e29d8b3d1531a27d30fe8d")
+WC_API_KEY = os.getenv("WC_API_KEY", "zwc_free_1822862af5be4f2d8537feec")
 WC_BASE_URL = os.getenv(
     "WC_BASE_URL", "https://api.zafronix.com/fifa/worldcup/v1"
 )

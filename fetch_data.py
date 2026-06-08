@@ -40,15 +40,25 @@ def fetch_openfootball() -> None:
 
 
 def fetch_stadiums() -> None:
-    print("  ↓ Zafronix /stadiums (altitudes)")
-    res = requests.get(
-        f"{WC_BASE_URL}/stadiums",
-        headers={"X-API-Key": WC_API_KEY},
-        timeout=20,
-    )
-    res.raise_for_status()
-    with open(os.path.join(DATA_DIR, "stadiums.json"), "w", encoding="utf-8") as f:
+    out = os.path.join(DATA_DIR, "stadiums.json")
+    if os.path.exists(out):
+        print("  ✓ stadiums déjà présent")
+        return
+    # Optionnel : ne sert qu'à la feature elevation_m. En cas d'échec (quota 429,
+    # réseau…), on N'INTERROMPT PAS le build : elevation_m vaudra simplement 0.
+    try:
+        res = requests.get(
+            f"{WC_BASE_URL}/stadiums",
+            headers={"X-API-Key": WC_API_KEY},
+            timeout=20,
+        )
+        res.raise_for_status()
+    except Exception as e:  # noqa: BLE001
+        print(f"  ⚠ stades indisponibles ({e}). elevation_m=0, on continue.")
+        return
+    with open(out, "w", encoding="utf-8") as f:
         json.dump(res.json(), f, ensure_ascii=False)
+    print("  ↓ Zafronix /stadiums OK")
 
 
 def main() -> None:
