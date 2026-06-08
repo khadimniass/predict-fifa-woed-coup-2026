@@ -1,0 +1,23 @@
+# Blueprint Render (gratuit) pour l'API ML.
+# - Si ce repo ne contient QUE predict_ml : garde tel quel.
+# - Si c'est un monorepo (fifa2026/predict_ml + world-coupe-2026) : place ce
+#   fichier à la racine du repo et décommente `rootDir`.
+services:
+  - type: web
+    name: wc2026-ml-api
+    runtime: python
+    plan: free
+    # rootDir: predict_ml
+    buildCommand: pip install -r requirements.txt && python fetch_data.py && python train.py
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      # URL(s) du frontend déployé, séparées par des virgules. À renseigner
+      # après le déploiement Vercel (ex: https://world-coupe-2026.vercel.app).
+      - key: CORS_ORIGINS
+        sync: false
+      # Optionnel : clé Zafronix perso (sinon clé free par défaut).
+      - key: WC_API_KEY
+        sync: false

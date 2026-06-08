@@ -1,10 +1,25 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Environnements virtuels
 .venv/
 venv/
 env/
 
+# Variables d'environnement
+.env
+
 # Données téléchargées + artefacts du modèle (régénérables)
 data/*.json
 *.pkl
-.env
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

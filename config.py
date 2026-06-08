@@ -15,8 +15,10 @@ DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.pkl")
 STATS_PATH = os.path.join(os.path.dirname(__file__), "stats.pkl")
 
-# Origines autorisées pour CORS (frontend Vite).
+# Origines autorisées pour CORS. Dev local + domaines de prod ajoutés via la
+# variable d'env CORS_ORIGINS (liste séparée par des virgules), ex :
+#   CORS_ORIGINS="https://mon-app.vercel.app,https://www.mon-domaine.com"
 CORS_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-]
+] + [o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()]
