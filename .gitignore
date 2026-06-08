@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Données téléchargées + artefacts du modèle (régénérables)
+data/*.json
+*.pkl
+.env
