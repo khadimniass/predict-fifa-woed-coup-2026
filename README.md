@@ -51,6 +51,38 @@ uvicorn app:app --reload    # → http://localhost:8000
 
 Clé Zafronix : variable d'env `WC_API_KEY` (sinon clé free tier par défaut dans `config.py`).
 
+## Déploiement (Render)
+
+L'API (FastAPI/ASGI) est déployée sur [Render](https://render.com) en offre
+**Free**. Le modèle est entraîné directement au build, donc aucun `.pkl` n'a
+besoin d'être commité (ils restent gitignorés).
+
+Configuration du Web Service :
+
+| Champ | Valeur |
+|---|---|
+| **Language** | Python 3 |
+| **Branch** | `main` |
+| **Build Command** | `pip install -r requirements.txt && python fetch_data.py && python train.py` |
+| **Start Command** | `uvicorn app:app --host 0.0.0.0 --port $PORT` |
+| **Health Check Path** | `/health` |
+
+> ⚠️ FastAPI est **ASGI** : la commande de démarrage est `uvicorn`, **pas**
+> `gunicorn ... .wsgi` (placeholder par défaut du formulaire, réservé au WSGI).
+
+Variables d'environnement (Render → *Environment*) :
+
+| Variable | Rôle |
+|---|---|
+| `CORS_ORIGINS` | URL(s) du frontend autorisées, séparées par des virgules (ex. `https://mon-app.vercel.app`) |
+| `WC_API_KEY` | Clé Zafronix perso (optionnel ; sinon clé free tier par défaut) |
+
+Le free tier se met en veille après ~15 min d'inactivité : la première requête
+suivante subit un *cold start* de ~30–60 s.
+
+> 💡 Le plan gratuit d'alwaysdata (100 Mo) ne convient pas : `xgboost` +
+> `scikit-learn` pèsent ~250–400 Mo une fois installés.
+
 ## API
 
 ### `POST /predict`
