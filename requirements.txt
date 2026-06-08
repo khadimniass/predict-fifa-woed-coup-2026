@@ -1,8 +1,10 @@
 fastapi>=0.115
 uvicorn[standard]>=0.34
-xgboost>=2.1
+# xgboost <3 : les wheels 3.x tirent les libs CUDA NVIDIA (~300 Mo, inutiles
+# sans GPU et trop lourdes pour le free tier). Les 2.x sont CPU et légères.
+xgboost>=2.0,<3
 scikit-learn>=1.5
 joblib>=1.4
-numpy>=1.26
+numpy>=1.26,<3
 requests>=2.32
 pydantic>=2.9
